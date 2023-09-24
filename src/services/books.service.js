@@ -48,4 +48,4 @@ class BooksService {
 // Create one instance object
 const booksService = new BooksService();
 
-export default BooksService;
+export default booksService;

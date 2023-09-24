@@ -27,3 +27,6 @@ function App() {
   );
 }
 export default App;
+
+//fields for title,subtitle,genre,description,image update all files.
+//div and title for add chapters.

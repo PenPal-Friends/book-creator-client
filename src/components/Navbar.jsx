@@ -15,7 +15,7 @@ function Navbar() {
       {/*    UPDATE     */}
       {isLoggedIn && (
         <>
-          <Link to="/Books">
+          <Link to="/books">
             <button>Books</button>
           </Link>
           <button onClick={logOutUser}>Logout</button>

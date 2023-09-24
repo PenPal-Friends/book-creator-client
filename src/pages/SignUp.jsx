@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import authService from "../services/auth.service";
+import authService from "./../services/auth.service";
 const API_URL = "http://localhost:5005";
 
 function SignUp(props) {
@@ -26,7 +26,7 @@ function SignUp(props) {
         navigate("/login");
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
+         const errorDescription = error.response.data.response;
         setErrorMessage(errorDescription);
       });
   };
