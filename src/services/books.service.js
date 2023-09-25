@@ -19,12 +19,12 @@ class BooksService {
     });
   }
 
-  // POST /api/projects
+  // POST /api/books
   createBook = requestBody => {
     return this.api.post('/api/books', requestBody);
   };
 
-  // GET /api/projects
+  // GET /api/books
   getAllBooks = () => {
     return this.api.get('/api/books');
   };
@@ -39,7 +39,7 @@ class BooksService {
     return this.api.put(`/api/books/${id}`, requestBody);
   };
 
-  // DELETE /api/projects/:id
+  // DELETE /api/books/:id
   deleteBook = id => {
     return this.api.delete(`/api/books/${id}`);
   };
