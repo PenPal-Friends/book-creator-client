@@ -51,6 +51,6 @@ class ChaptersService {
 }
 
 // Create one instance object
-const chaptersService = new chaptersService();
+const chaptersService = new ChaptersService();
 
 export default chaptersService;
