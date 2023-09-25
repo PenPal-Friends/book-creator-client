@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from "react";
-// import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import booksService from "../services/books.service";
 
@@ -12,7 +11,6 @@ function Books() {
       const response = await booksService.getAllBooks();
       const bookList = response.data;
       setBooks(bookList);
-      console.log(bookList);
     } catch (error) {
       console.error("Error fetching books:", error);
     }
