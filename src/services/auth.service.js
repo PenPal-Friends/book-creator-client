@@ -1,6 +1,6 @@
 // src/services/auth.service.js
 
-//import AuthService from AuthService;
+import AuthService from AuthService;
 
 import axios from 'axios';
 

@@ -19,9 +19,19 @@ function Books() {
   };
 
   // Fetch books when the component mounts
+  // const fetchBooks = ()=> {
+  //   fetch (API)
+  //   .then ((response)=> response.json())
+  //   .then ((data) => setBooks(data))
+  // }
+
+  // useEffect(() => {
+  //   fetchBooks();
+  // }, []);
+  
   useEffect(() => {
-    getBooks();
-  }, []);
+      setBooks();
+    }, []);
 
   return (
     <div className="BooksPage">
