@@ -20,6 +20,11 @@ function LoginPage(props) {
     e.preventDefault();
     const requestBody = { email, password };
 
+    // axios.post("http://localhost:5005/auth/login", requestBody )
+    // .then((res) => {
+    //   console.log('login', res.data)
+    // })
+
     authService
       .login(requestBody)
       .then((response) => {
@@ -30,9 +35,8 @@ function LoginPage(props) {
         navigate("/");
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
         //its showing an error here??
-        setErrorMessage(errorDescription);
+        setErrorMessage(error.response.data.message);
       });
   };
 

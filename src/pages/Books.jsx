@@ -15,7 +15,8 @@ function Books() {
       console.error("Error fetching books:", error);
     }
   };
-
+  
+ 
   // Fetch books when the component mounts
   // const fetchBooks = ()=> {
   //   fetch (API)
@@ -23,12 +24,9 @@ function Books() {
   //   .then ((data) => setBooks(data))
   // }
 
-  // useEffect(() => {
-  //   fetchBooks();
-  // }, []);
-  
+
   useEffect(() => {
-      setBooks();
+      getBooks();
     }, []);
 
   return (
@@ -37,13 +35,17 @@ function Books() {
       <h1>My books</h1>
 
       {books.map((book) => (
-
           <div className="BookCard card" key={book._id}>
+          
             <Link to={`/books/${book._id}`}>
               <h3>{book.title}</h3>
+              <p>Title: {book.title}</p>
               <p>Subtitle: {book.subtitle}</p>
-              <p>Genre: {book.genre}</p>
-            </Link>
+              <p>Description: {book.description}</p>
+              <p>Image: <img src={book.imageUrl} alt="book" width="200" />  </p>
+       
+              </Link>
+            
           </div>
 
       ))}
@@ -59,67 +61,3 @@ function Books() {
 }
 
 export default Books;
-
-
-/*
-import { useState, useEffect } from "react";
-// import axios from "axios";
-
-import booksService from "../services/books.service";
-import { Link, useParams } from "react-router-dom";
-
-const storedToken = localStorage.getItem("authToken");
-const API_URL = "http://localhost:5005";
-
-function Books() {
-  const [books, setBooks] = useState([]);
-  const { bookId } = useParams();
-
-  const getBooks = () => {
-  //  axios
-      // .get(`${API_URL}/api/books`, {headers: { Authorization: `Bearer ${storedToken}`}})
-      // .then((response) =>{console.log(response)
-      //    setBooks(response.data)})
-      // .catch((error) => console.log(error));
-     
-      booksService.getAllBooks()
-      .then((response) => {
-        const oneBook = response.data;
-        setBooks(oneBook);
-       console.log("ONE BOOOK *****8"+oneBook.title);
-      })
-      .catch((error) => console.log(error));
-
-  };
-console.log("IN the Get books*******---- 1");
-
-  // We set this effect will run only once, after the initial render
-  // by setting the empty dependency array - []
-  useEffect(() => {
-    getBooks();
-  }, []);
-
-  console.log("IN the Get books*******---- 21"+setBooks.length);
-  console.log("IN the Get books*******---- 22"+setBooks.title);
-  return (
-    
-    <div className="BooksPage">
-        <p>WE ARE IN BOOKS</p>
-      {books && books.map((book) => {
-        return (
-          <div className="BookCard card" key={book._id}>
-            <Link to={`/books/${book._id}`}>
-              <h3>{book.title}</h3>
-             
-            </Link>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-console.log("IN the Get books*******---- 3sss");
-
-export default Books;
-*/

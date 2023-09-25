@@ -19,14 +19,17 @@ function SignUp(props) {
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     const requestBody = { email, password, name };
+    console.log(requestBody)
 
     authService
       .signup(requestBody)
       .then((response) => {
+        console.log(response)
         navigate("/login");
       })
       .catch((error) => {
-         const errorDescription = error.response.data.response;
+         const errorDescription = error.response.data.message;
+         //its showing an error??
         setErrorMessage(errorDescription);
       });
   };

@@ -1,10 +1,13 @@
 import axios from 'axios';
 
+ 
+
 class BooksService {
   constructor() {
     this.api = axios.create({
       baseURL: import.meta.env.SERVER_URL || 'http://localhost:5005'
     });
+
 
     // Automatically set JWT token in the headers for every request
     this.api.interceptors.request.use(config => {
@@ -18,6 +21,12 @@ class BooksService {
       return config;
     });
   }
+// PUT /api/IMAGE
+   uploadImage = (file) => {
+    return api.post("/upload", file)
+      .then(res => res.data)
+      // .catch(errorHandler);
+  };
 
   // POST /api/books
   createBook = requestBody => {

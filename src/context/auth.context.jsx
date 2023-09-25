@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import authService from "./../services/auth.service";
+import AuthService from "./../services/auth.service";
 
 const API_URL = "http://localhost:5005";
 
@@ -26,7 +26,7 @@ function AuthProviderWrapper(props) {
         `${API_URL}/auth/verify`, 
         { headers: { Authorization: `Bearer ${storedToken}`} }
       )
-      authService.verify()
+      AuthService.verify()
       .then((response) => {
         // If the server verifies that JWT token is valid  ✅
         const user = response.data;
