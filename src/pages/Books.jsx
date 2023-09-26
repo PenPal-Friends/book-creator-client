@@ -35,6 +35,12 @@ function Books() {
 
       <h1>My books</h1>
 
+      <div>
+        <Link to="/books/create">
+          <button>+ Create new</button>
+        </Link>
+      </div>
+
       {books.map((book) => (
           <div className="BookCard card" key={book._id}>
           
@@ -51,12 +57,6 @@ function Books() {
           </div>
 
       ))}
-
-      <div>
-        <Link to="/chapters">
-          <button>+ Create new</button>
-        </Link>
-      </div>
 
     </div>
   );
