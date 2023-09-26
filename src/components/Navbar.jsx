@@ -32,6 +32,7 @@ function Navbar() {
           </Link>
         </>
       )}
+      <br/><br/>
     </nav>
   );
 }

@@ -19,34 +19,21 @@ class ChaptersService {
     });
   }
 
-  // POST /api/books/:bookId/chapters
+
   createChapter = requestBody => {
-    return this.api.post('/api/books/:bookId/chapters', requestBody);
+    return this.api.post(`/api/books/${bookId}/chapters`, requestBody);
   };
 
-  // GET /api/books/:bookId/chapters ?
-  getChapterList = () => {
-    return this.api.get('/api/books/:bookId/chapters');
-  };
-
-  // GET /api/books/:bookId/chapters/:chapterId ??
   getChapter = id => {
-    return this.api.get(`/api/books/:bookId/chapters/:chapterId`);
+    return this.api.get(`/api/books/${bookId}/chapters/${_id}`);
   };
 
-  // PUT /api/books/:bookId/chapters/:chapterId ??
   updateChapter = (id, requestBody) => {
-    return this.api.put(`/api/books/:bookId/chapters/:chapterId`, requestBody);
+    return this.api.put(`/api/books/${bookId}/chapters/${_id}`, requestBody);
   };
 
-  // PUT /api/books/:bookId/chapters/:chapterId ??
-  updateChapter = (id, requestBody) => {
-    return this.api.put(`/api/books/:bookId/chapters/:chapterId`, requestBody);
-  };
-
-  // DELETE /api/books/books/:bookId/chapters/:chapterId ??
   deleteChapter = id => {
-    return this.api.delete(`/api/books/books/:bookId/chapters/:chapterId`);
+    return this.api.delete(`/api/books/${bookId}/chapters/${_id}`);
   };
 }
 

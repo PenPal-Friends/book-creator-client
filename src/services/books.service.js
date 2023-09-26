@@ -33,19 +33,20 @@ class BooksService {
   getBook = id => {
     return this.api.get(`/api/books/${id}`);
   };
-
-  // PUT /api/books/:id
-  updateBook = (id, requestBody) => {
-    return this.api.put(`/api/books/${id}`, requestBody);
-  };
-
-  // DELETE /api/books/:id
-  deleteBook = id => {
-    return this.api.delete(`/api/books/${id}`);
-  };
 }
 
+  // PUT /api/books/:id
+  // updateBook = (id, requestBody) => {
+  //   return this.api.put(`/api/books/${id}`, requestBody);
+  // };
+
+  // DELETE /api/books/:id
+//   deleteBook = id => {
+//     return this.api.delete(`/api/books/${id}`);
+//   };
+
 // Create one instance object
+
 const booksService = new BooksService();
 
 export default booksService;

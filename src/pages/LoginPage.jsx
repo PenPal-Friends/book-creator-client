@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
-//import authService from "../services/auth.service";
 import authService from "./../services/auth.service";
 
 
@@ -21,6 +20,11 @@ function LoginPage(props) {
     e.preventDefault();
     const requestBody = { email, password };
 
+    // axios.post("http://localhost:5005/auth/login", requestBody )
+    // .then((res) => {
+    //   console.log('login', res.data)
+    // })
+
     authService
       .login(requestBody)
       .then((response) => {
@@ -31,8 +35,10 @@ function LoginPage(props) {
         navigate("/");
       })
       .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
+  
+    
+        //its showing an error here??
+        setErrorMessage(error.response.data.message);
       });
   };
 

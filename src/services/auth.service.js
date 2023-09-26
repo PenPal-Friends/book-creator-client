@@ -1,6 +1,6 @@
 // src/services/auth.service.js
 
-//import AuthService from AuthService;
+// import AuthService from AuthService;
 
 import axios from 'axios';
 
@@ -8,7 +8,7 @@ class AuthService {
   constructor() {
     // Create a new instance of axios with a custom configuration
     this.api = axios.create({
-      baseURL: import.meta.env.SERVER_URL || 'http://localhost:5005'
+      baseURL: import.meta.env.VITE_SERVER_URL || 'http://localhost:5005'
       // We set our API's base URL so that all requests use the same base URL
     });
 
@@ -25,18 +25,20 @@ class AuthService {
     });
   }
 
-  login = requestBody => {
+  login = (requestBody) => {
+    // console.log('authservice', requestBody)
     return this.api.post('/auth/login', requestBody);
     // same as
-   // return axios.post("http://localhost:5005/auth/login");
+   //return axios.post("http://localhost:5005/auth/login");
   };
 
 
-  signup = requestBody => {
+  signup = (requestBody) => {
+    // console.log('authservice', requestBody)
     return this.api.post('/auth/signup', requestBody);
   
     // same as
-    // return axios.post("http://localhost:5005/auth/singup");
+     //return axios.post("http://localhost:5005/auth/signup", requestBody);
   };
 
 
