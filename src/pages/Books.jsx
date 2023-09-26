@@ -15,11 +15,19 @@ function Books() {
       console.error("Error fetching books:", error);
     }
   };
-
+  
+ 
   // Fetch books when the component mounts
+  // const fetchBooks = ()=> {
+  //   fetch (API)
+  //   .then ((response)=> response.json())
+  //   .then ((data) => setBooks(data))
+  // }
+
+
   useEffect(() => {
-    getBooks();
-  }, []);
+      getBooks();
+    }, []);
 
   return (
     <div className="BooksPage">
@@ -27,20 +35,24 @@ function Books() {
       <h1>My books</h1>
 
       {books.map((book) => (
-
           <div className="BookCard card" key={book._id}>
+          
             <Link to={`/books/${book._id}`}>
               <h3>{book.title}</h3>
+              <p>Title: {book.title}</p>
               <p>Subtitle: {book.subtitle}</p>
-              <p>Genre: {book.genre}</p>
-            </Link>
+              <p>Description: {book.description}</p>
+              <p>Image: <img src={book.imageUrl} alt="book" width="200" />  </p>
+       
+              </Link>
+            
           </div>
 
       ))}
 
       <div>
-        <Link to="/books/create">
-          <button >+ Create new</button>
+        <Link to="/chapters">
+          <button>+ Create new</button>
         </Link>
       </div>
 

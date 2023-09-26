@@ -25,6 +25,11 @@ function LoginPage(props) {
     //   console.log('login', res.data)
     // })
 
+    // axios.post("http://localhost:5005/auth/login", requestBody )
+    // .then((res) => {
+    //   console.log('login', res.data)
+    // })
+
     authService
       .login(requestBody)
       .then((response) => {
@@ -35,8 +40,6 @@ function LoginPage(props) {
         navigate("/");
       })
       .catch((error) => {
-  
-    
         //its showing an error here??
         setErrorMessage(error.response.data.message);
       });
