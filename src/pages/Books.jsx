@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import booksService from "../services/books.service";
+// import axios from axios;
 
 function Books() {
   const [books, setBooks] = useState([]);
@@ -40,6 +41,7 @@ function Books() {
             <Link to={`/books/${book._id}`}>
               <h3>{book.title}</h3>
               <p>Title: {book.title}</p>
+              <input type = "file"/>
               <p>Subtitle: {book.subtitle}</p>
               <p>Description: {book.description}</p>
               <p>Image: <img src={book.imageUrl} alt="book" width="200" />  </p>
