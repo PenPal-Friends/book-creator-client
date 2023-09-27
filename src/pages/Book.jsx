@@ -1,22 +1,41 @@
 import axios from 'axios';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import booksService from "../services/books.service";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
+// .then(response => {
+//      toast.success("The book has been created successfully!"); })
+// .catch(error => {
+//      toast.error("An error occurred while creating the book:")
+// });
+
 
 function CreateBook() {
+    const { bookId } = useParams();
+    const isViewMode = bookId ? true : false;
+    // Automatically navigate to other route
+    const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
+    // Initial state
+    const initialState = {
         title: "Book title",
         subtitle: "Subtitle",
         genre: "",
         description: ""
-    });
+    };
 
-    const [isSaved, setIsSaved] = useState(false);
+    const [formData, setFormData] = useState(initialState);
 
-    // Automatically navigate to other route
-    const navigate = useNavigate();
+        useEffect(() => {
+            if (bookId) {
+                booksService.getBook(bookId)
+                .then(response => {
+                    setFormData(response.data);
+                }).catch(error => {
+                    console.error("Error fetching book:", error);
+                });
+            }
+        }, [bookId]);
 
     // Form input change
     const handleChange = (e) => {
@@ -33,7 +52,7 @@ function CreateBook() {
         const formData = new FormData();
         formData.append('file', file);
         // Upload preset: Lets us customize image settings in C.
-        formData.append('upload_preset', 'OUR_PRESET');
+        // formData.append('upload_preset', 'OUR_PRESET');
 
         axios.post('https://api.cloudinary.com/v1_1/OUR_CL_CLOUD_NAME/image/upload', formData)
             .then(response => {
@@ -48,13 +67,13 @@ function CreateBook() {
             });
     }
 
-    // Form submit
+    // New book form submit
     const handleSubmit = (e) => {
         e.preventDefault();
         booksService.createBook(formData)
             .then(response => {
                 navigate(`/books/${response.data._id}`);
-                setIsSaved(true);
+                setFormData(response.data);
             })
             .catch(error => {
                 console.error("Error creating book:", error);
@@ -63,29 +82,31 @@ function CreateBook() {
 
     // Form cancel
     const handleCancel = () => {
-        navigate("/books");
+        navigate(`/books/`);
     };
 
-    // Create new Chapter
+    // Redirection to other page to create new Chapter
     const handleCreateChapter = () => {
-        navigate("/chapters/create");
+        navigate(`/books/${bookId}/chapters/create`);
     };
-
 
     return (
         <div>
             {/* Background image section */}
             <div style= {{backgroundImage: `url(${formData.imageUrl})`, backgroundColor: 'lightgray', height: '120px'}} className="image-container" >
-                {isSaved ? (
+                {isViewMode ? (
                     <>
                         <div>
-                            <Link to="/">Home</Link> → My book
+                            <Link to="/">Books</Link> → My book
                         </div>
                         <h2>{formData.title}</h2>
                         <h3>{formData.subtitle}</h3>        
                     </>
                 ) : (
                     <>  
+                        <div>
+                            <Link to="/books">Books</Link> → My book
+                        </div>
                         <input
                             type="text"
                             name="title"
@@ -112,7 +133,7 @@ function CreateBook() {
         
         {
         //Rest of the fields
-        isSaved ? (
+        isViewMode ? (
             <>
             <p>{formData.genre}</p>
             <p>{formData.description}</p><br/>
@@ -123,23 +144,25 @@ function CreateBook() {
             </div>
             </>
         ) : (
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    name="genre"
-                    value={formData.genre}
-                    onChange={handleChange}
-                    placeholder="Genre"
-                /><br/><br/>
-                <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Description"
-                /><br/><br/>
-                <button type="submit">Create book</button>
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                name="genre"
+                value={formData.genre}
+                onChange={handleChange}
+                placeholder="Genre"
+            /><br /><br />
+            <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="Description"
+            /><br /><br />
+            <div>
                 <button type="button" onClick={handleCancel}>Cancel</button>
-            </form >
+                <button type="submit" style={{ backgroundColor: 'green'}}>Create</button>
+            </div>
+        </form >
         )}
     </div >
     );

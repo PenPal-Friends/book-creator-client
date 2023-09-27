@@ -32,6 +32,7 @@ function App() {
 
         <Route path="/books/:bookId/chapters/create" element={<Chapter />} />
         <Route path="/books/:bookId/chapters/:chapterId" element={<Chapter />} />
+        {/* ":bookId" actually creates a parameter to be used elsewhere */}
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />

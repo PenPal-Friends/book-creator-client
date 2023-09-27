@@ -1,20 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import chaptersService from "../services/chapters.service";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
+// .then(response => {
+//      toast.success("The chapter has been created successfully!"); })
+// .catch(error => {
+//      toast.error("An error occurred while creating the chapter:")
+// });
 
 
 function CreateChapter() {
+    const { bookId, chapterId } = useParams();
+    // Automatically navigate to other route
+    const navigate = useNavigate();
+    // Determine if chapter has been saved once before
+    const isNewChapter = !chapterId;
+
     const [formData, setFormData] = useState({
         // Initial state of form
-        chapterNumber: { chapterNumber },
+        chapterNumber: "",
         title: "",
         outline: "",
         text: ""
     });
-    // Retrieve bookId
-    const { bookId } = useParams();
-    // Automatically navigate to other route
-    const navigate = useNavigate();
+
+    // If chapterId exists, ...
 
     // Updates the formData state when the value of the input changes
     const handleChange = (e) => {
@@ -25,12 +36,12 @@ function CreateChapter() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleCreate = (e) => {
         e.preventDefault();
-        chaptersService.createChapter(formData)
+        chaptersService.createChapter(bookId, formData)
             // Navigate to page of chapter that was created
             .then(response => {
-                navigate(`/chapters/${response.data._id}`);
+                navigate(`books/${bookId}/chapters/${response.data._id}`);
             })
             .catch(error => {
                 console.error("Error creating chapter:", error);
@@ -42,10 +53,18 @@ function CreateChapter() {
         navigate(`/books/${bookId}`);
     };
 
+    // If delete is clicked, delete chapter
+    const handleDelete = () => {
+        chaptersService.deleteChapter(bookId, chapterId);
+    };
+
     return (
         <div>
-            <h2> Create new chapter </h2>
-            <form onSubmit={handleSubmit}>
+            <h2> {isNewChapter ?
+                "Create new chapter" :
+                "Edit chapter"}
+            </h2>
+            <form onSubmit={handleCreate}>
                 <input
                     type="text"
                     name="title"
@@ -65,8 +84,9 @@ function CreateChapter() {
                     onChange={handleChange}
                     placeholder="Write your story..."
                 />
-                <button type="submit">Save</button>
-                <button type="button" onClick={handleCancel}>Cancel</button>
+                <button type="submit">{ isNewChapter ? "Save" : "Save changes"}</button>
+                <button type="button" onClick={handleCancel}>{ isNewChapter ? "Cancel and discard" : "Cancel"}</button>
+                <button type="button" onClick={handleDelete}>Delete</button>
             </form>
         </div>
     )
