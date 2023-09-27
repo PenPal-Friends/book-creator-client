@@ -3,7 +3,7 @@ import axios from 'axios';
 class ChaptersService {
   constructor() {
     this.api = axios.create({
-      baseURL: import.meta.env.SERVER_URL || 'http://localhost:5005'
+      baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5005'
     });
 
     // Automatically set JWT token in the headers for every request
@@ -20,20 +20,21 @@ class ChaptersService {
   }
 
 
-  createChapter = requestBody => {
+  createChapter = (bookId, requestBody) => {
     return this.api.post(`/api/books/${bookId}/chapters`, requestBody);
   };
 
-  getChapter = id => {
-    return this.api.get(`/api/books/${bookId}/chapters/${_id}`);
+  getChapter = (bookId, chapterId) => {
+    return this.api.get(`/api/books/${bookId}/chapters/${chapterId}`);
   };
 
-  updateChapter = (id, requestBody) => {
-    return this.api.put(`/api/books/${bookId}/chapters/${_id}`, requestBody);
+  updateChapter = (bookId, chapterId, requestBody) => {
+    return this.api.put(`/api/books/${bookId}/chapters/${chapterId}`, requestBody);
   };
 
-  deleteChapter = id => {
-    return this.api.delete(`/api/books/${bookId}/chapters/${_id}`);
+  // is ${_id} correct? It says "id" argument which should be used
+  deleteChapter = (bookId, chapterId) => {
+    return this.api.delete(`/api/books/${bookId}/chapters/${chapterId}`);
   };
 }
 

@@ -56,22 +56,22 @@ function Books() {
 return (
     <div className="BooksPage">
 
-      <h1>My books</h1> 
-      {/* new changes */}
-      {books &&
-       books.map((book) => (
-          <div className="BookCard card" key={book._id}>
+      <h1>My books</h1>
+
+      <div>
+        <Link to="/books/create">
+          <button>+ Create new</button>
+        </Link>
+      </div>
+
+      {books.map((book) => (
+          <div className="BookCard card" key={book._id} style={{backgroundColor: 'white', marginBottom:'20px'}}>
           
             <Link to={`/books/${book._id}`}>
               <h3>{book.title}</h3>
-              <p>Title: {book.title}</p>
-              {/* <input type = "file"/> */}
-              <p>Subtitle: {book.subtitle}</p>
-              <p>Description: {book.description}</p>
-              <p>Image: <img src={book.imageUrl} alt="book" width="200" />  </p>
-       
-              </Link>
-              <button onClick={generatePDF }>Generate PDF</button>
+              <p>{book.subtitle}</p>
+              <p><img src={book.imageUrl} alt="book" width="200" />  </p>
+            </Link>
             
           </div>
 
