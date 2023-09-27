@@ -4,7 +4,7 @@ import axios from "axios";
 
 const api = axios.create({
   // make sure you use PORT = 5005 (the port where our server is running)
-  baseURL: import.meta.env.VITE_API_URL
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5005'
   // withCredentials: true // => you might need this option if using cookies and sessions
 });
 
@@ -24,7 +24,7 @@ const uploadImage = (file) => {
     .catch(errorHandler);
 };
 
-const createMovie = (newBook) => {
+const createBook = (newBook) => {
   return api.post("/books", newBook)
     .then(res => res.data)
     .catch(errorHandler);
