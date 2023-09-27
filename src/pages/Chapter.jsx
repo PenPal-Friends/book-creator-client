@@ -25,8 +25,6 @@ function CreateChapter() {
         text: ""
     });
 
-    // If chapterId exists, ...
-
     // Updates the formData state when the value of the input changes
     const handleChange = (e) => {
         const {name, value } = e.target;
@@ -36,17 +34,28 @@ function CreateChapter() {
         }));
     };
 
-    const handleCreate = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+
+        if(isNewChapter) {
         chaptersService.createChapter(bookId, formData)
             // Navigate to page of chapter that was created
             .then(response => {
-                navigate(`books/${bookId}/chapters/${response.data._id}`);
+                navigate(`/books/${bookId}/chapters/${response.data._id}`);
             })
             .catch(error => {
                 console.error("Error creating chapter:", error);
             });
-        };
+        } else {
+        chaptersService.updateChapter(bookId, chapterId, formData)
+            .then(response => {
+                navigate(`/books/${bookId}/chapters/${response.data._id}`);
+            })
+            .catch(error => {
+                console.error("Error updating chapter:", error);
+            });
+        }
+    };
 
     // If cancel is clicked, navigate to the chapter's book
     const handleCancel = () => {
@@ -54,9 +63,9 @@ function CreateChapter() {
     };
 
     // If delete is clicked, delete chapter
-    const handleDelete = () => {
-        chaptersService.deleteChapter(bookId, chapterId);
-    };
+    // const handleDelete = () => {
+    //     chaptersService.deleteChapter(bookId, chapterId);
+    // };
 
     return (
         <div>
@@ -64,7 +73,7 @@ function CreateChapter() {
                 "Create new chapter" :
                 "Edit chapter"}
             </h2>
-            <form onSubmit={handleCreate}>
+            <form onSubmit={handleSubmit}>
                 <input
                     type="text"
                     name="title"
@@ -79,14 +88,14 @@ function CreateChapter() {
                     placeholder="Write your outline..."
                 />
                 <textarea
-                    name="description"
-                    value={formData.description}
+                    name="text"
+                    value={formData.text}
                     onChange={handleChange}
                     placeholder="Write your story..."
                 />
-                <button type="submit">{ isNewChapter ? "Save" : "Save changes"}</button>
+                <button type="submit">{ isNewChapter ? "Save" : "Save changes" }</button>
                 <button type="button" onClick={handleCancel}>{ isNewChapter ? "Cancel and discard" : "Cancel"}</button>
-                <button type="button" onClick={handleDelete}>Delete</button>
+                {/* <button type="button" onClick={handleDelete}>{ isNewChapter ? null : "Delete"}</button> */}
             </form>
         </div>
     )
