@@ -27,7 +27,7 @@ function CreateChapter() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        chaptersService.createChapter(formData)
+        chaptersService.createChapter(bookId, formData)
             // Navigate to page of chapter that was created
             .then(response => {
                 navigate(`/chapters/${response.data._id}`);

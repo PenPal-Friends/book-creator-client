@@ -3,6 +3,18 @@ import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import booksService from "../services/books.service";
 // import axios from axios;
+import jsPDF from "jspdf";
+
+
+// const doc = new jsPDF();
+
+// function generatePDF(){
+  
+//   //var doc = new jsPDF ();
+//   doc.text(20,20, bookTitle);
+// //SAVE the PDF
+// doc.save('document.pdf');
+// }
 
 function Books() {
   const [books, setBooks] = useState([]);
@@ -16,6 +28,22 @@ function Books() {
       console.error("Error fetching books:", error);
     }
   };
+
+  function generatePDF(book) {
+    const doc = new jsPDF();
+    doc.text(20, 20, `Title: ${book.title}`);
+    doc.text(20, 30, `Subtitle: ${book.subtitle}`);
+    doc.text(20, 40, `Description: ${book.description}`);
+    doc.save(`${book.title}.pdf`);
+  }
+  // useEffect(() => {
+  //   service.getBooks()
+  //     .then((data) => {
+  //       // console.log("data", data);
+  //       setBooks(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
   
  
   // Fetch books when the component mounts
@@ -25,28 +53,25 @@ function Books() {
   //   .then ((data) => setBooks(data))
   // }
 
-
-  useEffect(() => {
-      getBooks();
-    }, []);
-
-  return (
+return (
     <div className="BooksPage">
 
-      <h1>My books</h1>
-
-      {books.map((book) => (
+      <h1>My books</h1> 
+      {/* new changes */}
+      {books &&
+       books.map((book) => (
           <div className="BookCard card" key={book._id}>
           
             <Link to={`/books/${book._id}`}>
               <h3>{book.title}</h3>
               <p>Title: {book.title}</p>
-              <input type = "file"/>
+              {/* <input type = "file"/> */}
               <p>Subtitle: {book.subtitle}</p>
               <p>Description: {book.description}</p>
               <p>Image: <img src={book.imageUrl} alt="book" width="200" />  </p>
        
               </Link>
+              <button onClick={generatePDF }>Generate PDF</button>
             
           </div>
 
@@ -55,9 +80,10 @@ function Books() {
       <div>
         <Link to="/chapters">
           <button>+ Create new</button>
+       
         </Link>
       </div>
-
+      <button onClick={generatePDF}>Generate PDF</button>
     </div>
   );
 }

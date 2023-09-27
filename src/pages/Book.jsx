@@ -29,6 +29,7 @@ function CreateBook() {
 
     // Cloudinary image upload
     const handleImageUpload = (e) => {
+          // console.log("The file to be uploaded is: ", e.target.files[0]);
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
@@ -103,7 +104,7 @@ function CreateBook() {
                         {/* Cloudinary image upload */}
                         <input
                             type="file"
-                            name="image upload"
+                            name="imageUrl"
                             onChange={handleImageUpload}
                         />
                     </>
@@ -144,7 +145,6 @@ function CreateBook() {
     </div >
     );
 }
-
 
 export default CreateBook;
 
