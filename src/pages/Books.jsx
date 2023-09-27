@@ -43,7 +43,6 @@ function Books() {
             </Link>
             
           </div>
-
       ))}
 
     </div>

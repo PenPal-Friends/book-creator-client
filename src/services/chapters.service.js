@@ -32,10 +32,21 @@ class ChaptersService {
     return this.api.put(`/api/books/${bookId}/chapters/${chapterId}`, requestBody);
   };
 
-  // is ${_id} correct? It says "id" argument which should be used
   deleteChapter = (bookId, chapterId) => {
     return this.api.delete(`/api/books/${bookId}/chapters/${chapterId}`);
   };
+
+  getChapters = (bookId) => {
+    return this.api.get(`/api/books/${bookId}/chapters/`);
+  };
+
+  // moveChapterUp = (bookId, chapterId) => {
+  //   return this.api.put(`/api/books/${bookId}/chapters/${chapterId}`);
+  // };
+
+  // moveChapterDown = (bookId, chapterId) => {
+  //   return this.api.put(`/api/books/${bookId}/chapters/${chapterId}`);
+  // };
 }
 
 // Create one instance object
