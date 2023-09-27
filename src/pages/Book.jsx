@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import booksService from "../services/books.service";
+import chaptersService from "../services/chapters.service";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 // .then(response => {
@@ -26,16 +27,25 @@ function CreateBook() {
 
     const [formData, setFormData] = useState(initialState);
 
-        useEffect(() => {
-            if (bookId) {
-                booksService.getBook(bookId)
+    // If bookId value changes, this updates its formData
+    useEffect(() => {
+        if (bookId) {
+            booksService.getBook(bookId)
                 .then(response => {
                     setFormData(response.data);
                 }).catch(error => {
                     console.error("Error fetching book:", error);
                 });
-            }
-        }, [bookId]);
+
+            // Fetch chapters for the book
+            chaptersService.getChapters(bookId)
+            .then(response => {
+                setChapters(response.data);
+            }).catch(error => {
+                console.error("Error fetching chapters:", error);
+            });
+        }
+    }, [bookId]);
 
     // Form input change
     const handleChange = (e) => {
@@ -48,7 +58,6 @@ function CreateBook() {
 
     // Cloudinary image upload
     const handleImageUpload = (e) => {
-          // console.log("The file to be uploaded is: ", e.target.files[0]);
         const file = e.target.files[0];
         const formData = new FormData();
         formData.append('file', file);
@@ -86,25 +95,29 @@ function CreateBook() {
         navigate(`/books/`);
     };
 
-    // Redirection to other page to create new Chapter
-    const handleCreateChapter = () => {
+    // + Add Chapter: Redirect to /chapters/create
+    const handleAddChapter = () => {
         navigate(`/books/${bookId}/chapters/create`);
     };
+
+    // Display chapters
+    const [chapters, setChapters] = useState ([]);
+
 
     return (
         <div>
             {/* Background image section */}
-            <div style= {{backgroundImage: `url(${formData.imageUrl})`, backgroundColor: 'lightgray', height: '120px'}} className="image-container" >
+            <div style={{ backgroundImage: `url(${formData.imageUrl})`, backgroundColor: 'lightgray', height: '120px' }} className="image-container" >
                 {isViewMode ? (
                     <>
                         <div>
                             <Link to="/">Books</Link> → My book
                         </div>
                         <h2>{formData.title}</h2>
-                        <h3>{formData.subtitle}</h3>        
+                        <h3>{formData.subtitle}</h3>
                     </>
                 ) : (
-                    <>  
+                    <>
                         <div>
                             <Link to="/books">Books</Link> → My book
                         </div>
@@ -114,70 +127,67 @@ function CreateBook() {
                             value={formData.title}
                             onChange={handleChange}
                             placeholder="Book title"
-                        /><br/>
+                        /><br />
                         <input
                             type="text"
                             name="subtitle"
                             value={formData.subtitle}
                             onChange={handleChange}
                             placeholder="Subtitle"
-                        /><br/>
+                        /><br />
                         {/* Cloudinary image upload */}
                         <input
                             type="file"
-                            name="imageUrl"
+                            name="image upload"
                             onChange={handleImageUpload}
                         />
                     </>
                 )}
             </div>
-        
-        {
-        //Rest of the fields
-        isViewMode ? (
-            <>
-            <p>{formData.genre}</p>
-            <p>{formData.description}</p><br/>
-            <h4>Chapters</h4><br/>
-            <button type="button" onClick={handleCreateChapter}>+ Add</button>
-            <div style={{ backgroundColor: 'lightgray', width: '100%' }}>
-                <div style={{ backgroundColor: 'gray', width: '120px', height: '120px' }}></div>
-            </div>
-            </>
-        ) : (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                name="genre"
-                value={formData.genre}
-                onChange={handleChange}
-                placeholder="Genre"
-            /><br /><br />
-            <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Description"
-            /><br /><br />
-            <div>
-                <button type="button" onClick={handleCancel}>Cancel</button>
-                <button type="submit" style={{ backgroundColor: 'green'}}>Create</button>
-            </div>
-        </form >
-        )}
-    </div >
+
+            {
+                //Rest of the fields
+                isViewMode ? (
+                    <>
+                        <p>{formData.genre}</p>
+                        <p>{formData.description}</p><br />
+                        <h4>Chapters</h4><br />
+                        <button type="button" onClick={handleAddChapter}>+ Add</button>
+                        <div style={{ backgroundColor: 'lightgray', width: '100%' }}>
+                            {chapters.map((chapter) => (
+                                <div className="chapterCard" key={chapter._id} style={{ backgroundColor: 'white', margin: '12px', padding: '12px' }}>
+                                    <Link to={`/books/${bookId}/chapters/${chapter._id}`}>
+                                        <h3>{chapter.title}</h3>
+                                        <p>{chapter.text}</p>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                ) : (
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            name="genre"
+                            value={formData.genre}
+                            onChange={handleChange}
+                            placeholder="Genre"
+                        /><br /><br />
+                        <textarea
+                            name="description"
+                            value={formData.description}
+                            onChange={handleChange}
+                            placeholder="Description"
+                        /><br /><br />
+                        <div>
+                            <button type="button" onClick={handleCancel}>Cancel</button>
+                            <button type="submit" style={{ backgroundColor: 'green' }}>Create</button>
+                        </div>
+                    </form >
+                )}
+        </div >
     );
 }
 
+
 export default CreateBook;
-
-
-
-// Position cards
-// Backend property: chapterNumber
-//
-// Backend: see above
-//
-// Frontend:
-// C1) If chapterNumber = 1, disable arrow up
-// C2) If chapterNumber = max length of chapters array, disable arrow down

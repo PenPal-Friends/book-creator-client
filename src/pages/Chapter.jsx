@@ -63,9 +63,9 @@ function CreateChapter() {
     };
 
     // If delete is clicked, delete chapter
-    // const handleDelete = () => {
-    //     chaptersService.deleteChapter(bookId, chapterId);
-    // };
+    const handleDelete = () => {
+        chaptersService.deleteChapter(bookId, chapterId);
+    };
 
     return (
         <div>
@@ -94,8 +94,8 @@ function CreateChapter() {
                     placeholder="Write your story..."
                 />
                 <button type="submit">{ isNewChapter ? "Save" : "Save changes" }</button>
-                <button type="button" onClick={handleCancel}>{ isNewChapter ? "Cancel and discard" : "Cancel"}</button>
-                {/* <button type="button" onClick={handleDelete}>{ isNewChapter ? null : "Delete"}</button> */}
+                <button type="button" onClick={handleCancel}>{ isNewChapter ? "Cancel and discard" : "Cancel and exit"}</button>
+                <button type="button" onClick={handleDelete}>{ isNewChapter ? null : "Delete"}</button>
             </form>
         </div>
     )

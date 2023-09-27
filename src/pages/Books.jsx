@@ -1,20 +1,7 @@
-
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import booksService from "../services/books.service";
 // import axios from axios;
-import jsPDF from "jspdf";
-
-
-// const doc = new jsPDF();
-
-// function generatePDF(){
-  
-//   //var doc = new jsPDF ();
-//   doc.text(20,20, bookTitle);
-// //SAVE the PDF
-// doc.save('document.pdf');
-// }
 
 function Books() {
   const [books, setBooks] = useState([]);
@@ -29,31 +16,12 @@ function Books() {
     }
   };
 
-  function generatePDF(book) {
-    const doc = new jsPDF();
-    doc.text(20, 20, `Title: ${book.title}`);
-    doc.text(20, 30, `Subtitle: ${book.subtitle}`);
-    doc.text(20, 40, `Description: ${book.description}`);
-    doc.save(`${book.title}.pdf`);
-  }
-  // useEffect(() => {
-  //   service.getBooks()
-  //     .then((data) => {
-  //       // console.log("data", data);
-  //       setBooks(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
-  
- 
-  // Fetch books when the component mounts
-  // const fetchBooks = ()=> {
-  //   fetch (API)
-  //   .then ((response)=> response.json())
-  //   .then ((data) => setBooks(data))
-  // }
 
-return (
+  useEffect(() => {
+      getBooks();
+    }, []);
+
+  return (
     <div className="BooksPage">
 
       <h1>My books</h1>
@@ -74,16 +42,8 @@ return (
             </Link>
             
           </div>
-
       ))}
 
-      <div>
-        <Link to="/chapters">
-          <button>+ Create new</button>
-       
-        </Link>
-      </div>
-      <button onClick={generatePDF}>Generate PDF</button>
     </div>
   );
 }
