@@ -15,6 +15,8 @@ function Navbar() {
           </button>
       </Link>
 
+
+
       {/*    UPDATE     */}
       {isLoggedIn && (
         <>
@@ -23,6 +25,12 @@ function Navbar() {
               Books 
             </button>
           </Link>
+          <Link to="/mybooks">
+            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"> 
+              My Books
+            </button>
+          </Link>
+
           <button 
            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
           onClick={logOutUser} 
@@ -34,6 +42,7 @@ function Navbar() {
       {!isLoggedIn && (
         <>
           <Link to="/signup">
+          
             <button className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
               Sign Up</button>
           </Link>
