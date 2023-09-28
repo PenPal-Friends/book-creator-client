@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
@@ -36,7 +36,9 @@ function LoginPage(props) {
   };
 
   return (
+
     <div className="LoginPage">
+    <div>
       <h1>Login</h1>
 
       <form onSubmit={handleLoginSubmit}>
@@ -57,6 +59,7 @@ function LoginPage(props) {
 
       <p>Don't have an account yet?</p>
       <Link to={"/signup"}> Sign Up</Link>
+    </div>
     </div>
   );
 }
