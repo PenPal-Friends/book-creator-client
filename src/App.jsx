@@ -12,7 +12,7 @@ import Navbar from "./components/Navbar";
 import Books from "./pages/Books";
 import Book from "./pages/Book";
 import Chapter from "./pages/Chapter";
-
+import MyBooks from "./pages/MyBooks";
 
 
 function App() {
@@ -36,6 +36,8 @@ function App() {
 
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUp />} />
+
+        <Route path= "/mybooks" element= {<MyBooks/>}/>
       </Routes>
 
     </div>

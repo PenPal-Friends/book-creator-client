@@ -1,9 +1,9 @@
 {import('tailwindcss').Config} 
 
 export default {
-  purge: [
-    './src/**/*.js',
-    './src/**/*.jsx',
+  contnt: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    
   ],
   darkMode: false,
   theme: {
