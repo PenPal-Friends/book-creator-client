@@ -18,7 +18,34 @@ function CreateChapter() {
         title: "Chapter title",
         outline: "",
         text: ""
-    });
+    };
+
+
+    const [formData, setFormData] = useState(initialState);
+    const [bookTitle, setBookTitle] = useState("");
+
+
+    useEffect(() => {
+        // Get the book's title
+        booksService.getBook(bookId)
+                .then(response => {
+                    setBookTitle(response.data.title);
+                })
+                .catch(error => {
+                    console.error("Error fetching chapter:", error);
+                })
+        // Updates chapter's formData if its chapterId value changes
+        if (chapterId) {
+            chaptersService.getChapter(bookId, chapterId)
+                .then(response => {
+                    setFormData(response.data);
+                })
+                .catch(error => {
+                    console.error("Error fetching chapter:", error);
+                });
+        }
+    }, [bookId, chapterId]);
+
 
     // Updates the formData state when the value of the input changes
     const handleChange = (e) => {
@@ -80,11 +107,19 @@ function CreateChapter() {
 
     return (
         <div>
-            <h2> {isNewChapter ?
-                "Create new chapter" :
-                "Edit chapter"}
-            </h2>
-            <form onSubmit={handleSubmit}>
+
+            {/* Title section */}
+            <div style={{ backgroundColor: 'black', height: '120px' }}>
+                {isNewChapter ? (
+
+                    <div>
+                        <Link to="/">Books</Link> → <Link to={`/books/${bookId}`}>{bookTitle}</Link> → My chapter
+                    </div>
+                ) : (
+                    <div>
+                        <Link to="/">Books</Link> → <Link to={`/books/${bookId}`}>{bookTitle}</Link> → <span>Chapter {formData.chapterNumber}</span>
+                    </div>
+                )}
                 <input
                     type="text"
                     name="title"
@@ -126,4 +161,3 @@ function CreateChapter() {
 
   
   export default CreateChapter;
-
