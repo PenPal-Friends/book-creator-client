@@ -13,6 +13,16 @@ body {
   margin: 0;
   text-align :center;
   min-height: 100vh;
+  position: relative;
+}
+
+
+body::before {
+  left: 0; /* Create left padding */
+}
+
+body::after {
+  right: 0; /* Create right padding */
 }
 
 /* .Chapter {
