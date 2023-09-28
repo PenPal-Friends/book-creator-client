@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Index from "./pages/Index";
@@ -14,13 +14,12 @@ import Book from "./pages/Book";
 import Chapter from "./pages/Chapter";
 import MyBooks from "./pages/MyBooks";
 
-
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <div className="Book writing App">
-      <ToastContainer />
+      <ToastContainer position={toast.POSITION.BOTTOM_RIGHT} />
 
       <Navbar />
       <Routes>
