@@ -101,10 +101,18 @@ function CreateBook() {
     const [chapters, setChapters] = useState([]);
 
     // Move chapter up
-    const handleMoveChapterUp = () => {
+    const handleMoveChapterUp = (event, chapterId) => {
+        // Stop event propagation (stacking of events because of move button on card)
+        event.preventDefault();
+        event.stopPropagation();
+
         chaptersService.moveChapterUp(bookId, chapterId)
-            .then(response => {
-                return booksService.getBook(bookId);
+            .then(() => {
+                // Refresh chapters after moving
+                chaptersService.getChapters(bookId)
+                    .then(response => {
+                        setChapters(response.data);
+                    });
             })
             .catch(error => {
                 console.error("Error moving the chapter.")
@@ -112,12 +120,20 @@ function CreateBook() {
             });
     };
 
-    // Move chapter up
-    const handleMoveChapterDown = () => {
+    // Move chapter down
+    const handleMoveChapterDown = (event, chapterId) => {
+        // Stop event propagation (stacking of events because of move button on card)
+        event.preventDefault();
+        event.stopPropagation();
+
         chaptersService.moveChapterDown(bookId, chapterId)
-            .then(response => {
-                return booksService.getBook(bookId);
-            })
+        .then(() => {
+            // Refresh chapters after moving
+            chaptersService.getChapters(bookId)
+                .then(response => {
+                    setChapters(response.data);
+                });
+        })
             .catch(error => {
                 console.error("Error moving the chapter.")
                 toast.error("An error occurred while moving the chapter.");
@@ -182,8 +198,8 @@ function CreateBook() {
                                         <p>Chapter {chapter.chapterNumber}</p>
                                         <h3>{chapter.title}</h3>
                                         <p>{chapter.text}</p>
-                                        <button type="button" onClick={handleMoveChapterUp}>Up</button>
-                                        <button type="button" onClick={handleMoveChapterDown}>Down</button>
+                                        <button type="button" onClick={(event) => handleMoveChapterUp(event, chapter._id)}>Up</button>
+                                        <button type="button" onClick={(event) => handleMoveChapterDown(event, chapter._id)}>Down</button>
                                     </div>
                                 </Link>
                             ))}
