@@ -68,7 +68,7 @@ function CreateChapter() {
     };
 
     return (
-        <div>
+        <div className="Chapter">
             <h2> {isNewChapter ?
                 "Create new chapter" :
                 "Edit chapter"}
