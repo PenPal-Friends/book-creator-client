@@ -3,12 +3,7 @@ import { useState, useEffect } from "react";
 import booksService from "../services/books.service";
 import chaptersService from "../services/chapters.service";
 import { useParams, useNavigate, Link } from "react-router-dom";
-
-// .then(response => {
-//      toast.success("The book has been created successfully!"); })
-// .catch(error => {
-//      toast.error("An error occurred while creating the book:")
-// });
+import { toast } from "react-toastify";
 
 
 function CreateBook() {
@@ -39,11 +34,11 @@ function CreateBook() {
 
             // Fetch chapters for the book
             chaptersService.getChapters(bookId)
-            .then(response => {
-                setChapters(response.data);
-            }).catch(error => {
-                console.error("Error fetching chapters:", error);
-            });
+                .then(response => {
+                    setChapters(response.data);
+                }).catch(error => {
+                    console.error("Error fetching chapters:", error);
+                });
         }
     }, [bookId]);
 
@@ -84,9 +79,11 @@ function CreateBook() {
             .then(response => {
                 navigate(`/books/${response.data._id}`);
                 setFormData(response.data);
+                toast.success("The book has been created successfully!",);
             })
             .catch(error => {
                 console.error("Error creating book:", error);
+                toast.error("An error occurred while creating the book.");
             });
     };
 
@@ -101,7 +98,31 @@ function CreateBook() {
     };
 
     // Display chapters
-    const [chapters, setChapters] = useState ([]);
+    const [chapters, setChapters] = useState([]);
+
+    // Move chapter up
+    const handleMoveChapterUp = () => {
+        chaptersService.moveChapterUp(bookId, chapterId)
+            .then(response => {
+                return booksService.getBook(bookId);
+            })
+            .catch(error => {
+                console.error("Error moving the chapter.")
+                toast.error("An error occurred while moving the chapter.");
+            });
+    };
+
+    // Move chapter up
+    const handleMoveChapterDown = () => {
+        chaptersService.moveChapterDown(bookId, chapterId)
+            .then(response => {
+                return booksService.getBook(bookId);
+            })
+            .catch(error => {
+                console.error("Error moving the chapter.")
+                toast.error("An error occurred while moving the chapter.");
+            });
+    };
 
 
     return (
@@ -111,7 +132,7 @@ function CreateBook() {
                 {isViewMode ? (
                     <>
                         <div>
-                            <Link to="/">Books</Link> → My book
+                            <Link to="/books">Books</Link> → {formData.title}
                         </div>
                         <h2>{formData.title}</h2>
                         <h3>{formData.subtitle}</h3>
@@ -154,36 +175,46 @@ function CreateBook() {
                         <h4>Chapters</h4><br />
                         <button type="button" onClick={handleAddChapter}>+ Add</button>
                         <div style={{ backgroundColor: 'lightgray', width: '100%' }}>
+                            {/* Chapter cards */}
                             {chapters.map((chapter) => (
-                                <div className="chapterCard" key={chapter._id} style={{ backgroundColor: 'white', margin: '12px', padding: '12px' }}>
-                                    <Link to={`/books/${bookId}/chapters/${chapter._id}`}>
+                                <Link to={`/books/${bookId}/chapters/${chapter._id}`} className="block">
+                                    <div className="chapterCard" key={chapter._id} style={{ backgroundColor: 'white', margin: '12px', padding: '12px' }}>
+                                        <p>Chapter {chapter.chapterNumber}</p>
                                         <h3>{chapter.title}</h3>
                                         <p>{chapter.text}</p>
-                                    </Link>
-                                </div>
+                                        <button type="button" onClick={handleMoveChapterUp}>Up</button>
+                                        <button type="button" onClick={handleMoveChapterDown}>Down</button>
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     </>
                 ) : (
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            name="genre"
-                            value={formData.genre}
-                            onChange={handleChange}
-                            placeholder="Genre"
-                        /><br /><br />
-                        <textarea
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            placeholder="Description"
-                        /><br /><br />
+                    <>
+                        {/* Button nav bar */}
                         <div>
                             <button type="button" onClick={handleCancel}>Cancel</button>
-                            <button type="submit" style={{ backgroundColor: 'green' }}>Create</button>
-                        </div>
-                    </form >
+                            <button type="submit" form="bookForm" style={{ backgroundColor: 'green' }}>
+                                Create
+                            </button>
+                        </div><br />
+
+                        <form id="bookForm" onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                name="genre"
+                                value={formData.genre}
+                                onChange={handleChange}
+                                placeholder="Genre"
+                            /><br /><br />
+                            <textarea
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                placeholder="Description"
+                            /><br /><br />
+                        </form >
+                    </>
                 )}
         </div >
     );

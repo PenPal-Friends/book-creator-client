@@ -21,12 +21,6 @@ class BooksService {
       return config;
     });
   }
-// PUT /api/IMAGE
-   uploadImage = (file) => {
-    return api.post("/upload", file)
-      .then(res => res.data)
-      // .catch(errorHandler);
-  };
 
   // POST /api/books
   createBook = requestBody => {
@@ -39,10 +33,18 @@ class BooksService {
   };
 
   // GET /api/books/:id
-  getBook = id => {
-    return this.api.get(`/api/books/${id}`);
+  getBook = bookId => {
+    return this.api.get(`/api/books/${bookId}`);
+  };
+
+  // PUT /api/IMAGE
+  uploadImage = (file) => {
+    return api.post("/upload", file)
+      .then(res => res.data)
+      // .catch(errorHandler);
   };
 }
+
 
   // PUT /api/books/:id
   // updateBook = (id, requestBody) => {
@@ -55,6 +57,7 @@ class BooksService {
 //   };
 
 // Create one instance object
+
 
 const booksService = new BooksService();
 

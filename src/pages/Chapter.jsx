@@ -1,13 +1,8 @@
 import { useState, useEffect } from "react";
 import chaptersService from "../services/chapters.service";
-import { useParams, useNavigate } from "react-router-dom";
+import booksService from "../services/books.service";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
-
-// .then(response => {
-//      toast.success("The chapter has been created successfully!"); })
-// .catch(error => {
-//      toast.error("An error occurred while creating the chapter:")
-// });
 
 
 function CreateChapter() {
@@ -17,86 +12,148 @@ function CreateChapter() {
     // Determine if chapter has been saved once before
     const isNewChapter = !chapterId;
 
-    const [formData, setFormData] = useState({
-        // Initial state of form
+
+    const initialState = {
         chapterNumber: "",
-        title: "",
+        title: "Chapter title",
         outline: "",
         text: ""
-    });
+    };
+
+
+    const [formData, setFormData] = useState(initialState);
+    const [bookTitle, setBookTitle] = useState("");
+
+
+    useEffect(() => {
+        // Get the book's title
+        booksService.getBook(bookId)
+                .then(response => {
+                    setBookTitle(response.data.title);
+                })
+                .catch(error => {
+                    console.error("Error fetching chapter:", error);
+                })
+        // Updates chapter's formData if its chapterId value changes
+        if (chapterId) {
+            chaptersService.getChapter(bookId, chapterId)
+                .then(response => {
+                    setFormData(response.data);
+                })
+                .catch(error => {
+                    console.error("Error fetching chapter:", error);
+                });
+        }
+    }, [bookId, chapterId]);
+
 
     // Updates the formData state when the value of the input changes
     const handleChange = (e) => {
-        const {name, value } = e.target;
+        const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(isNewChapter) {
-        chaptersService.createChapter(bookId, formData)
-            // Navigate to page of chapter that was created
-            .then(response => {
-                navigate(`/books/${bookId}/chapters/${response.data._id}`);
-            })
-            .catch(error => {
-                console.error("Error creating chapter:", error);
-            });
+        if (isNewChapter) {
+            chaptersService.createChapter(bookId, formData)
+                // Navigate to page of chapter that was created
+                .then(response => {
+                    navigate(`/books/${bookId}/chapters/${response.data._id}`);
+                    toast.success("The chapter has been created successfully!");
+                })
+                .catch(error => {
+                    console.error("Error creating chapter:", error);
+                    toast.error("An error occurred while creating the chapter.");
+                });
         } else {
-        chaptersService.updateChapter(bookId, chapterId, formData)
-            .then(response => {
-                navigate(`/books/${bookId}/chapters/${response.data._id}`);
-            })
-            .catch(error => {
-                console.error("Error updating chapter:", error);
-            });
+            chaptersService.updateChapter(bookId, chapterId, formData)
+                .then(response => {
+                    navigate(`/books/${bookId}/chapters/${response.data._id}`);
+                    toast.success("The chapter has been updated successfully!");
+                })
+                .catch(error => {
+                    console.error("Error updating chapter:", error);
+                    toast.error("An error occurred while updating the chapter.");
+                });
         }
     };
+
 
     // If cancel is clicked, navigate to the chapter's book
     const handleCancel = () => {
         navigate(`/books/${bookId}`);
     };
 
-    // If delete is clicked, delete chapter
+
+    // Delete chapter & then navigate to chapter's book
     const handleDelete = () => {
-        chaptersService.deleteChapter(bookId, chapterId);
+        chaptersService.deleteChapter(bookId, chapterId)
+            .then(() => {
+                navigate(`/books/${bookId}`);
+                toast.success("The chapter has been deleted successfully!");
+            })
+            .catch(error => {
+                console.error("Error deleting chapter:", error);
+                toast.error("An error occurred while deleting the chapter.");
+            });
     };
+
 
     return (
         <div>
-            <h2> {isNewChapter ?
-                "Create new chapter" :
-                "Edit chapter"}
-            </h2>
-            <form onSubmit={handleSubmit}>
+
+            {/* Title section */}
+            <div style={{ backgroundColor: 'black', height: '120px' }}>
+                {isNewChapter ? (
+
+                    <div>
+                        <Link to="/">Books</Link> → <Link to={`/books/${bookId}`}>{bookTitle}</Link> → My chapter
+                    </div>
+                ) : (
+                    <div>
+                        <Link to="/">Books</Link> → <Link to={`/books/${bookId}`}>{bookTitle}</Link> → <span>Chapter {formData.chapterNumber}</span>
+                    </div>
+                )}
                 <input
                     type="text"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    placeholder="Title"
-                />
+                    placeholder="Chapter title"
+                /><br />
+            </div>
+
+            {/* Button nav bar */}
+            <div>
+            {!isNewChapter && <button type="button" onClick={handleDelete}>Delete</button>}
+                <button type="button" onClick={handleCancel}>{isNewChapter ? "Cancel and discard" : "Cancel and exit"}</button>
+                <button type="submit" form="chapterForm">
+                    {isNewChapter ? "Save" : "Save changes"}
+                </button>
+            </div><br/>
+
+            {/* Rest of the fields */}
+            <form id="chapterForm" onSubmit={handleSubmit}>
                 <textarea
                     name="outline"
                     value={formData.outline}
                     onChange={handleChange}
                     placeholder="Write your outline..."
-                />
+                /><br/>
                 <textarea
                     name="text"
                     value={formData.text}
                     onChange={handleChange}
                     placeholder="Write your story..."
                 />
-                <button type="submit">{ isNewChapter ? "Save" : "Save changes" }</button>
-                <button type="button" onClick={handleCancel}>{ isNewChapter ? "Cancel and discard" : "Cancel and exit"}</button>
-                <button type="button" onClick={handleDelete}>{ isNewChapter ? null : "Delete"}</button>
             </form>
+
         </div>
     )
 
@@ -104,3 +161,4 @@ function CreateChapter() {
 
   
   export default CreateChapter;
+

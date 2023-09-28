@@ -10,7 +10,9 @@ function Books() {
     try {
       const response = await booksService.getAllBooks();
       const bookList = response.data;
-      setBooks(bookList);
+      // Reverse the array to display newest on top
+      const reverseBookList = bookList.reverse();
+      setBooks(reverseBookList);
     } catch (error) {
       console.error("Error fetching books:", error);
     }

@@ -40,13 +40,13 @@ class ChaptersService {
     return this.api.get(`/api/books/${bookId}/chapters/`);
   };
 
-  // moveChapterUp = (bookId, chapterId) => {
-  //   return this.api.put(`/api/books/${bookId}/chapters/${chapterId}`);
-  // };
+  moveChapterUp = (bookId, chapterId) => {
+    return this.api.put(`/api/books/${bookId}/chapters/${chapterId}/move-up`);
+  };
 
-  // moveChapterDown = (bookId, chapterId) => {
-  //   return this.api.put(`/api/books/${bookId}/chapters/${chapterId}`);
-  // };
+  moveChapterDown = (bookId, chapterId) => {
+    return this.api.put(`/api/books/${bookId}/chapters/${chapterId}/move-down`);
+  };
 }
 
 // Create one instance object
