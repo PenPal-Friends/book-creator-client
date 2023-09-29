@@ -106,21 +106,25 @@ function CreateChapter() {
 
 
     return (
-        <div>
+        <div className="bg-gray-100 min-h-screen">
 
             {/* Title section */}
-            <div style={{ backgroundColor: 'black', height: '120px' }}>
-                {isNewChapter ? (
+            <div className="bg-cover bg-center relative text-left">
+                
+                {/* Breadcrumb */}
 
-                    <div>
-                        <Link to="/">Books</Link> → <Link to={`/books/${bookId}`}>{bookTitle}</Link> → My chapter
-                    </div>
-                ) : (
-                    <div>
-                        <Link to="/">Books</Link> → <Link to={`/books/${bookId}`}>{bookTitle}</Link> → <span>Chapter {formData.chapterNumber}</span>
-                    </div>
-                )}
+                <div className="flex items-center space-x-4 mb-2">
+                    <Link to="/books" className="text-white hover:underline">
+                        Books
+                    </Link>
+                    <span className="mx-2">›</span><span className="mx-2"></span>
+                    {isNewChapter ? "My chapter" : `Chapter ${formData.chapterNumber}`}
+                </div><br /><br />
+
+                <div>
+                
                 <input
+                    className="border rounded lg:w-1/2 md:w-2/3 sm:w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline"
                     type="text"
                     name="title"
                     value={formData.title}
@@ -130,30 +134,44 @@ function CreateChapter() {
             </div>
 
             {/* Button nav bar */}
-            <div>
-            {!isNewChapter && <button type="button" onClick={handleDelete}>Delete</button>}
-                <button type="button" onClick={handleCancel}>{isNewChapter ? "Cancel and discard" : "Cancel and exit"}</button>
-                <button type="submit" form="chapterForm">
-                    {isNewChapter ? "Save" : "Save changes"}
-                </button>
-            </div><br/>
+                <div className="flex justify-between bg-white border-b-2 border-gray-300 px-8 py-4 mb-12">
+                    {!isNewChapter && 
+                    <button type="button" onClick={handleDelete} className="bg-white border-2 border-red-400 text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="button">
+                        Delete
+                    </button>}
+                    <div className="flex justify-end">
+                        <button type="button" onClick={handleCancel} className="bg-white border-2 border-[#24978F] text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="button">
+                            {isNewChapter ? "Cancel and discard" : "Cancel and exit"}
+                        </button>
+                        <button type="submit" form="chapterForm" className="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="submit" form="chapterForm">
+                            {isNewChapter ? "Save" : "Save changes"}
+                        </button>
+                    </div>
+                </div>
 
-            {/* Rest of the fields */}
-            <form id="chapterForm" onSubmit={handleSubmit}>
+            {/* Form: Outline & text */}
+            <div className="flex justify-center w-full">
+            <form id="chapterForm" className="bg-white flex flex-col items-start p-10 lg:w-2/3 md:w-3/4 sm:w-full rounded shadow" onSubmit={handleSubmit}>
                 <textarea
+                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline mt-2"
                     name="outline"
                     value={formData.outline}
                     onChange={handleChange}
                     placeholder="Write your outline..."
+                    rows="24"
                 /><br/>
                 <textarea
+                className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline mt-2"
                     name="text"
                     value={formData.text}
                     onChange={handleChange}
                     placeholder="Write your story..."
+                    rows="48"
                 />
             </form>
+            </div>
 
+        </div>
         </div>
     )
 
