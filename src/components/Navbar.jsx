@@ -39,11 +39,11 @@ function Navbar() {
               
             </>
           ) : (
-            <button className="text-[#333333] font-semibold text-base uppercase py-2 px-4 rounded-full hover:text-opacity-80"
+            <Link  to="/" className="text-[#333333] font-semibold text-base uppercase py-2 px-4 rounded-full hover:text-opacity-80"
               onClick={logOutUser}
             >
               Logout ›
-            </button>
+            </Link>
           )}
         </div>
       </div>

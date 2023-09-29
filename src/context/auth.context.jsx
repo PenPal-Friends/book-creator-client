@@ -55,6 +55,7 @@ function AuthProviderWrapper(props) {
   const logOutUser = () => {
     removeToken();
     authenticateUser();
+  
   }    
 
 
