@@ -1,8 +1,11 @@
-# React + Vite
+# book-creator-Client
+REST API for a penpal app.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repo implements the backend REST API (built in Express + MongoDB).
+A repository for with the frontend (React App) can be found here:  
+Instructions
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Demo
+A demo of the REST API can be found here: https://penpal-bookcreator.netlify.app/
+https://github.com/PenPal-Friends/book-creator-server.git
