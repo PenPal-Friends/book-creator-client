@@ -36,7 +36,7 @@ function Books() {
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-8 w-4/5">
         {books.map((book) => (
-          <div className="bg-white p-4 shadow-md rounded-lg p-6 mb-6 transform hover:scale-105 transition-transform duration-200" key={book._id} style={{ backgroundColor: 'white', marginBottom: '20px' }}>
+          <div className="bg-white h-80 p-4 shadow-md rounded-lg p-6 mb-6 transform hover:scale-105 transition-transform duration-200" key={book._id} style={{ backgroundColor: 'white', marginBottom: '20px' }}>
 
             <Link to={`/books/${book._id}`} className="flex flex-col items-center">
               <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
