@@ -39,7 +39,6 @@ function Books() {
           <div className="bg-white p-4 shadow-md rounded-lg p-6 mb-6 transform hover:scale-105 transition-transform duration-200" key={book._id} style={{ backgroundColor: 'white', marginBottom: '20px' }}>
 
             <Link to={`/books/${book._id}`} className="flex flex-col items-center">
-              <p><img src={book.imageUrl} alt="book" width="200" className="w-100 h-64 object-cover mb-4 rounded-lg" />  </p>
               <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
               <p className="text-gray-600">{book.subtitle}</p>
             </Link>

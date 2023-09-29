@@ -109,29 +109,30 @@ function CreateChapter() {
         <div className="bg-gray-200 min-h-screen">
 
             {/* Title section */}
-            <div className="absolute inset-0 bg-black opacity-80"></div>
-            <div className="relative z-10 px-12 py-12 text-white">
-                
-                {/* Breadcrumb */}
+            <div className="bg-cover bg-center relative image-container text-left">
+                <div className="absolute inset-0 bg-black opacity-80"></div>
+                <div className="relative z-10 px-12 py-12 text-white">
+                    {/* Breadcrumb */}
 
-                <div className="flex items-center space-x-4 mb-2">
-                    <Link to="/books" className="text-white hover:underline">
-                        Books
-                    </Link>
-                    <span className="mx-2">›</span><span className="mx-2"></span>
-                    {isNewChapter ? "My chapter" : `Chapter ${formData.chapterNumber}`}
-                </div><br /><br />
+                    <div className="flex items-center space-x-4 mb-2">
+                        <Link to="/books" className="text-white hover:underline">
+                            Books
+                        </Link>
+                        <span className="mx-2">›</span><span className="mx-2"></span>
+                        {isNewChapter ? "My chapter" : `Chapter ${formData.chapterNumber}`}
+                    </div><br /><br />
 
-                <div>
-                
-                <input
-                    className="text-3xl font-bold bg-transparent py-1 mt-2"
-                    type="text"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    placeholder="Chapter title"
-                /><br />
+                    <div>
+                        <input
+                            className="text-3xl font-bold bg-transparent py-1 mt-2"
+                            type="text"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            placeholder="Chapter title"
+                        /><br />
+                    </div>
+                </div>
             </div>
 
             {/* Button nav bar */}
@@ -172,7 +173,6 @@ function CreateChapter() {
             </form>
             </div>
 
-        </div>
         </div>
     )
 
