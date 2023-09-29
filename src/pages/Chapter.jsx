@@ -136,14 +136,14 @@ function CreateChapter() {
             {/* Button nav bar */}
                 <div className="flex justify-between bg-white border-b-2 border-gray-300 px-8 py-4 mb-12">
                     {!isNewChapter && 
-                    <button type="button" onClick={handleDelete} className="bg-white border-2 border-red-400 text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="button">
+                    <button type="button" onClick={handleDelete} className="bg-white border-2 border-red-400 text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F">
                         Delete
                     </button>}
                     <div className="flex justify-end">
-                        <button type="button" onClick={handleCancel} className="bg-white border-2 border-[#24978F] text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="button">
+                        <button type="button" onClick={handleCancel} className="bg-white border-2 border-[#24978F] text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F">
                             {isNewChapter ? "Cancel and discard" : "Cancel and exit"}
                         </button>
-                        <button type="submit" form="chapterForm" className="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="submit" form="chapterForm">
+                        <button type="submit" form="chapterForm" className="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F">
                             {isNewChapter ? "Save" : "Save changes"}
                         </button>
                     </div>
