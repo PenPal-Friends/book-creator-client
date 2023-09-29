@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import image from "../images/Woman_no-bg.png";
 
+
 function Index() {
   return (
     <div className="flex h-screen">
@@ -11,52 +12,42 @@ function Index() {
       <div className="flex-grow p-4">
         <div className="flex">
         
-          <table className="w-full h-90vh">
+          <table style={{ height: '90vh', width: '100%'}}>
             <tbody>
              
               <tr>
               {/* Text Box (Left) */}
-              <td style={{ padding: '300px', border: '1px solid #000' }}> 
-                  <div className="w-full p-4"> {/* Added w-full for uniform width */}
-                    <h2 className="text-xl font-bold">Write Your nonfiction Book, lighting fast</h2>
-                    <p style={{ paddingTop: '20px' }}>Add your text content here.</p>
+              <td style={{ padding: '100px'}}> 
+
+                    <h1 className="text-5xl align-left font-bold tracking-wider">Write Your nonfiction Book, lighting fast</h1>
                     {/* Button */}
                     <Link to="/books">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-                      get started
+                    <button className="bg-[#24978F] text-white hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-12">
+                      Get started
                     </button>
                     </Link>
                
              
-                  </div>
+
                </td>
 
                 {/* Center table space */}
-                <td style={{ padding: '5px', border: '1px solid #000' }}></td>
+                <td style={{ padding: '5px'}}></td>
                 
                 {/* Image Box (Right) */}
-                <td style={{ padding: '100px', border: '1px solid #000', backgroundColor: 'lightgrey'}}> 
+                <td style={{ width: "45vw" }}> 
                   <div className="w-full p-4"> {/* Added w-full for uniform width */}
                     <h2 className="text-xl font-semibold"></h2>
                     <img
-                      src="image"
-                      alt="image"
-                      className="w-full h-auto rounded-lg"
+                      src={image}
+                      alt="Woman"
+                      style={{ width: "45vw", height: "auto" }}
                     />
                   </div>
                 </td>
                 
               </tr>
-               
-                {/* Footer */}
-                <tr style={{ padding: '50px', border: '1px solid #000',textJustify:'center'}}>
-                <td>
-                <h3 className="text-small">
-  @ Copyrights 2023 - <a href="https://www.linkedin.com/in/divya-rajendra-8356225b/">Divya</a> and <a href="https://www.linkedin.com/in/julia-mp/">Julia</a>
-              </h3>
-                </td>
 
-                </tr>
             </tbody>
           </table>
         </div>
