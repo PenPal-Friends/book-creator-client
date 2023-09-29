@@ -25,6 +25,22 @@ body::after {
   right: 0; /* Create right padding */
 }
 
+/* styles.css (or your CSS-in-JS equivalent) */
+.cell-padding {
+  padding: 10px; /* Adjust the padding value as needed */
+}
+
+.h3 {
+  text-align: center;
+}
+
+
+
+
+
+
+
+
 /* .Chapter {
   background-color: red;
 }
