@@ -23,7 +23,7 @@ function Index() {
                     {/* Button */}
                     <Link to="/books">
                     <button className="bg-[#24978F] text-white hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-12">
-                      get started
+                      Get started
                     </button>
                     </Link>
                
