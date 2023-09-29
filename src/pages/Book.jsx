@@ -6,6 +6,8 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
+
+
 function CreateBook() {
     const { bookId } = useParams();
     const isViewMode = bookId ? true : false;
@@ -204,10 +206,14 @@ function CreateBook() {
             {
                 //Rest of the fields
                 isViewMode ? (
-                    <>
-                        <p className="text-gray-700">{formData.genre}</p>
-                        <p className="text-gray-600 mb-4">{formData.description}</p><br />
+                    <><div className="flex justify-center items-center">
+                        <div className="mt-10 mb-12 bg-white flex flex-col items-start p-10 lg:w-2/3 md:w-3/4 sm:w-full rounded shadow">
+                            {/* <p className="text-gray-700">{formData.genre}</p> */}
+                            <p className="text-gray-600 mb-4">{formData.description}</p><br />
+                        </div>
+                        </div>
 
+                            <div>
                             <h3 className="text-2xl font-bold mb-2">Chapters</h3><br />
                             <button
                                 className="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F"
@@ -218,92 +224,94 @@ function CreateBook() {
                             {/* Chapter card section */}
                             <div className="flex justify-center mt-4">
                                 <div className="mt-4 lg:w-2/3 md:w-3/4 sm:w-full">
-                                <div className="bg-gray-300 px-2 py-2 space-y-2">
-                                    {/* Chapter cards */}
-                                    {chapters.map((chapter, index) => (
+                                    {/* <div className="bg-gray-300 px-2 py-2 space-y-2"> */}
+                                        <div className="px-2 py-2 space-y-2">
+                                        {/* Chapter cards */}
+                                        {chapters.map((chapter, index) => (
 
-                                        <Link to={`/books/${bookId}/chapters/${chapter._id}`} className="block">
-                                            <div className="bg-white flex flex-col md:flex-row items-start p-10 rounded shadow space-x-0 md:space-x-10 justify-between" key={chapter._id}>
+                                            <Link to={`/books/${bookId}/chapters/${chapter._id}`} className="block">
+                                                <div className="bg-white flex flex-col md:flex-row items-start p-10 rounded shadow space-x-0 md:space-x-10 justify-between" key={chapter._id}>
 
-                                                <div className="flex flex-col md:flex-row items-start w-full md:w-auto space-x-auto md:space-x-10">
-                                                    <div className="w-3 flex items-start">
-                                                        <p className="text-gray-600">{chapter.chapterNumber}</p>
+                                                    <div className="flex flex-col md:flex-row items-start w-full md:w-auto space-x-auto md:space-x-10">
+                                                        <div className="w-3 flex items-start">
+                                                            <p className="text-gray-600">{chapter.chapterNumber}</p>
+                                                        </div>
+
+                                                        <div style={{ width: '228px' }} className="flex-shrink-0">
+                                                            <h3 className="text-xl font-bold text-left">{chapter.title}</h3>
+                                                        </div>
+
+                                                        <div className="flex flex-grow items-start">
+                                                            <p className="text-gray-600 overflow-hidden line-clamp-4 text-left">{chapter.text}</p>
+                                                        </div>
                                                     </div>
 
-                                                    <div style={{ width: '228px' }} className="flex-shrink-0">
-                                                        <h3 className="text-xl font-bold text-left">{chapter.title}</h3>
+                                                    <div className="flex flex-col space-y-2 w-auto mt-4 md:mt-0">
+                                                        <button
+                                                            className={`bg-gray-300 w-12 h-12 px-2 py-1 rounded ${index === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white border-2 border-gray-400 text-gray-600'}`}
+                                                            type="button"
+                                                            onClick={(event) => handleMoveChapterUp(event, chapter._id)}
+                                                            // Disable the button & fitting styling
+                                                            disabled={index === 0}
+                                                        >
+                                                            ⌃
+                                                        </button>
+                                                        <button
+                                                            className={`transform rotate-180 bg-gray-300 w-12 h-12 px-2 py-1 rounded ${index === chapters.length - 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white border-2 border-gray-400 text-gray-600'}`}
+                                                            type="button"
+                                                            onClick={(event) => handleMoveChapterDown(event, chapter._id)}
+                                                            // Disable the button & fitting styling
+                                                            disabled={index === chapters.length - 1}
+                                                        >
+                                                            ⌃
+                                                        </button>
                                                     </div>
 
-                                                    <div className="flex flex-grow items-start">
-                                                        <p className="text-gray-600 overflow-hidden line-clamp-4 text-left">{chapter.text}</p>
-                                                    </div>
                                                 </div>
+                                            </Link>
 
-                                                <div className="flex flex-col space-y-2 w-auto mt-4 md:mt-0">
-                                                    <button
-                                                        className={`bg-gray-300 w-12 h-12 px-2 py-1 rounded ${index === 0 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white border-2 border-gray-400 text-gray-600'}`}
-                                                        type="button"
-                                                        onClick={(event) => handleMoveChapterUp(event, chapter._id)}
-                                                        // Disable the button & fitting styling
-                                                        disabled={index === 0}
-                                                    >
-                                                        ⌃
-                                                    </button>
-                                                    <button
-                                                        className={`transform rotate-180 bg-gray-300 w-12 h-12 px-2 py-1 rounded ${index === chapters.length - 1 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-white border-2 border-gray-400 text-gray-600'}`}
-                                                        type="button"
-                                                        onClick={(event) => handleMoveChapterDown(event, chapter._id)}
-                                                        // Disable the button & fitting styling
-                                                        disabled={index === chapters.length - 1}
-                                                    >
-                                                        ⌃
-                                                    </button>
-                                                </div>
-
-                                            </div>
-                                        </Link>
-
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </>
-                ) : (
-                    <>
-                        {/* Button nav bar */}
-                        <div className="flex justify-end bg-white border-b-2 border-gray-300 px-8 py-4 mb-12">
-                            <button className="bg-white border-2 border-[#24978F] text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="button" onClick={handleCancel}>Cancel</button>
-                            <button className="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="submit" form="bookForm">
-                                Create
-                            </button>
-                        </div>
+                        ) : (
+                        <>
+                            {/* Button nav bar */}
+                            <div className="flex justify-end bg-white border-b-2 border-gray-300 px-8 py-4 mb-12">
+                                <button className="bg-white border-2 border-[#24978F] text-[#333333] font-semibold text-base uppercase py-3 px-5 mr-4 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="button" onClick={handleCancel}>Cancel</button>
+                                <button className="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F" type="submit" form="bookForm">
+                                    Create
+                                </button>
+                            </div>
 
-                        {/* Form: Text & genre */}
-                        <div className="flex justify-center w-full">
-                            <form id="bookForm" className="bg-white flex flex-col items-start p-10 lg:w-2/3 md:w-3/4 sm:w-full rounded shadow" onSubmit={handleSubmit}>
-                                <input
-                                    className="border rounded lg:w-1/2 md:w-2/3 sm:w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline"
-                                    type="text"
-                                    name="genre"
-                                    value={formData.genre}
-                                    onChange={handleChange}
-                                    placeholder="Genre"
-                                /><br />
-                                <textarea
-                                    className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline mt-2"
-                                    name="description"
-                                    value={formData.description}
-                                    onChange={handleChange}
-                                    placeholder="Description"
-                                    rows="24"
-                                />
-                            </form >
-                        </div>
-                    </>
+                            {/* Form: Text & genre */}
+                            <div className="flex justify-center w-full items-center">
+                                <form id="bookForm" className="bg-white flex flex-col items-start p-10 lg:w-2/3 md:w-3/4 sm:w-full rounded shadow" onSubmit={handleSubmit}>
+                                    {/* <input
+                                        className="border rounded lg:w-1/2 md:w-2/3 sm:w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline"
+                                        type="text"
+                                        name="genre"
+                                        value={formData.genre}
+                                        onChange={handleChange}
+                                        placeholder="Genre"
+                                    /><br /> */}
+                                    <textarea
+                                        className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline mt-2"
+                                        name="description"
+                                        value={formData.description}
+                                        onChange={handleChange}
+                                        placeholder="Description"
+                                        rows="24"
+                                    />
+                                </form >
+                            </div>
+                        </>
                 )}
-        </div>
-    );
+                    </div>
+            );
 }
 
 
-export default CreateBook;
+            export default CreateBook;
