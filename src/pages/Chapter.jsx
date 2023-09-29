@@ -106,10 +106,11 @@ function CreateChapter() {
 
 
     return (
-        <div className="bg-gray-100 min-h-screen">
+        <div className="bg-gray-200 min-h-screen">
 
             {/* Title section */}
-            <div className="bg-cover bg-center relative text-left">
+            <div className="absolute inset-0 bg-black opacity-80"></div>
+            <div className="relative z-10 px-12 py-12 text-white">
                 
                 {/* Breadcrumb */}
 
@@ -124,7 +125,7 @@ function CreateChapter() {
                 <div>
                 
                 <input
-                    className="border rounded lg:w-1/2 md:w-2/3 sm:w-full py-2 px-3 text-gray-700 leading-tight focus: outline-none focus:shadow-outline"
+                    className="text-3xl font-bold bg-transparent py-1 mt-2"
                     type="text"
                     name="title"
                     value={formData.title}

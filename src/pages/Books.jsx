@@ -30,7 +30,7 @@ function Books() {
 
       <div className="mb-8">
         <Link to="/books/create">
-          <button className ="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">+ Create new</button>
+          <button className ="bg-[#24978F] text-white font-semibold text-base uppercase py-3 px-5 rounded-full hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-24978F">+ Create new</button>
         </Link>
       </div>
 

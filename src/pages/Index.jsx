@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import Books from "./Books";
 
+// If NOT logged in, display:
 
 function Index() {
   return (
@@ -12,3 +11,6 @@ function Index() {
 }
 
 export default Index;
+
+// If logged in, display:
+// Book page
